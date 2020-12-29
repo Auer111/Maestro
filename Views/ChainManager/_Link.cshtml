@@ -1,0 +1,32 @@
+﻿@model Request
+
+<div class="card text-white mb-3 w-100 mx-auto" style="background-color: rgb(65, 123, 255);">
+    <div class="card-header">@Model.Name</div>
+    <div class="card-body" style="width: 100%;">
+        <h5 class="card-title text-center">Variables</h5>
+        <hr>
+        <div class="card-text row p-2">
+            <div class="col-5 badge-container">
+                <h5>IN</h5>
+                @foreach (KeyValuePair<string, Maestro.Models.Variable> variable in Model.Variables)
+                {
+                    if (variable.Value.Direction == Direction.Request)
+                    {
+                        <span class="badge @variable.Value.Type">@variable.Value.Mapping</span>
+                    }
+                }
+            </div>
+            <div class="col-2"></div>
+            <div class="col-5 badge-container text-right" style="padding: 0;">
+                <h5>OUT</h5>
+                @foreach (KeyValuePair<string, Maestro.Models.Variable> variable in Model.Variables)
+                {
+                    if (variable.Value.Direction == Direction.Response)
+                    {
+                        <span class="badge @variable.Value.Type">@variable.Value.Mapping</span>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,281 @@
+﻿
+#maestro-overlay {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: black;
+    background-color: #000000bf;
+    z-index: 100;
+}
+
+
+
+.br-0 {
+    border-radius: 0;
+}
+
+.input-group-toppend {
+    display: inline-flex;
+    margin: 0;
+    color: #ffffff;
+    background-color: #4e5d6c;
+    padding: .8rem;
+    width: 100%;
+}
+    .input-group-toppend ~ *{
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+.nav-pills {
+    border-bottom: 5px solid var(--primary);
+}
+.tab-pane {
+    padding: 1rem;
+    background: linear-gradient(0deg, rgb(74 146 223 / 34%) 0%, var(--primary) 100%);
+}
+
+
+/* Blueprint 
+-------------------------------------------------- */
+.blueprint {
+    background-color: rgb(65, 123, 255);
+    color: white;
+    font-family: sans-serif;
+}
+
+.AddVariableOverlay {
+    display: none;
+    position: absolute;
+    margin-left: 10px;
+    color: white;
+    border: 5px solid #417bff;
+    background-color: #417bff;
+    box-shadow: 0px 0px 8px 8px black;
+    z-index: 101;
+}
+    .AddVariableOverlay .close-overlay {
+        position: absolute;
+        z-index: 102;
+        border: 3px solid;
+        border-radius: 1em;
+        top: 0.2em;
+        left: -20px;
+        box-shadow: 0 0 5px 3px black;
+    }
+
+/* XML Renderer
+-------------------------------------------------- */
+.XMLEditor {
+    line-height: 2.4em;
+    height: 100%;
+    background-color: rgb(65, 123, 255);
+    color: white;
+}
+.xmlEditButton {
+    border: none;
+    line-height: normal;
+    margin-right: 5px;
+}
+.xmlStaticContent {
+    display: inline;
+    background-color: #0ca7ff;
+    border: 1px solid white;
+    border-radius: 5px;
+    color: white;
+    line-height: normal;
+}
+.xmlContent:not(.default) {
+    text-decoration: line-through;
+    text-decoration-color: black;
+    color: black;
+}
+
+
+button.xmlStaticContent:hover {
+    background-color: #90c6ff;
+    color:black;
+}
+
+/* Chain Editor
+-------------------------------------------------- */
+.card-add {
+    border: 3px gray dotted;
+}
+.card-add:hover {
+    border: 3px gray solid !important;
+    background-color: #f1f1f1;
+}
+.badge-container > .badge{
+    color: black;
+}
+/* Spinner
+-------------------------------------------------- */
+#loading {
+    display: none;
+    width: 1em;
+    height: 1em;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+/* Slider
+-------------------------------------------------- */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 2em;
+    height: 1em;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+    /* Hide default HTML checkbox */
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 1em;
+        width: 1em;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(1em);
+    -ms-transform: translateX(1em);
+    transform: translateX(1em);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+
+/* Icons
+-------------------------------------------------- */
+.i-edit {
+    display: inherit;
+    width: 1em;
+    vertical-align: middle;
+    height: 1em;
+    background-color: #417bff00;
+    background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='pen-square' class='svg-inline--fa fa-pen-square fa-w-14' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='currentColor' d='M400 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48zM238.1 177.9L102.4 313.6l-6.3 57.1c-.8 7.6 5.6 14.1 13.3 13.3l57.1-6.3L302.2 242c2.3-2.3 2.3-6.1 0-8.5L246.7 178c-2.5-2.4-6.3-2.4-8.6-.1zM345 165.1L314.9 135c-9.4-9.4-24.6-9.4-33.9 0l-23.1 23.1c-2.3 2.3-2.3 6.1 0 8.5l55.5 55.5c2.3 2.3 6.1 2.3 8.5 0L345 199c9.3-9.3 9.3-24.5 0-33.9z'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+}
+
+.i-globe {
+    display: inherit;
+    width: 1em;
+    vertical-align: middle;
+    height: 1em;
+    background-color: #417bff00;
+    background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='globe' class='svg-inline--fa fa-globe fa-w-16' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 496 512'%3E%3Cpath fill='currentColor' d='M336.5 160C322 70.7 287.8 8 248 8s-74 62.7-88.5 152h177zM152 256c0 22.2 1.2 43.5 3.3 64h185.3c2.1-20.5 3.3-41.8 3.3-64s-1.2-43.5-3.3-64H155.3c-2.1 20.5-3.3 41.8-3.3 64zm324.7-96c-28.6-67.9-86.5-120.4-158-141.6 24.4 33.8 41.2 84.7 50 141.6h108zM177.2 18.4C105.8 39.6 47.8 92.1 19.3 160h108c8.7-56.9 25.5-107.8 49.9-141.6zM487.4 192H372.7c2.1 21 3.3 42.5 3.3 64s-1.2 43-3.3 64h114.6c5.5-20.5 8.6-41.8 8.6-64s-3.1-43.5-8.5-64zM120 256c0-21.5 1.2-43 3.3-64H8.6C3.2 212.5 0 233.8 0 256s3.2 43.5 8.6 64h114.6c-2-21-3.2-42.5-3.2-64zm39.5 96c14.5 89.3 48.7 152 88.5 152s74-62.7 88.5-152h-177zm159.3 141.6c71.4-21.2 129.4-73.7 158-141.6h-108c-8.8 56.9-25.6 107.8-50 141.6zM19.3 352c28.6 67.9 86.5 120.4 158 141.6-24.4-33.8-41.2-84.7-50-141.6h-108z'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+}
+
+.i-tree {
+    display: inherit;
+    width: 1em;
+    vertical-align: middle;
+    height: 1em;
+    background-color: #417bff00;
+    background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='tree' class='svg-inline--fa fa-tree fa-w-12' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'%3E%3Cpath fill='currentColor' d='M378.31 378.49L298.42 288h30.63c9.01 0 16.98-5 20.78-13.06 3.8-8.04 2.55-17.26-3.28-24.05L268.42 160h28.89c9.1 0 17.3-5.35 20.86-13.61 3.52-8.13 1.86-17.59-4.24-24.08L203.66 4.83c-6.03-6.45-17.28-6.45-23.32 0L70.06 122.31c-6.1 6.49-7.75 15.95-4.24 24.08C69.38 154.65 77.59 160 86.69 160h28.89l-78.14 90.91c-5.81 6.78-7.06 15.99-3.27 24.04C37.97 283 45.93 288 54.95 288h30.63L5.69 378.49c-6 6.79-7.36 16.09-3.56 24.26 3.75 8.05 12 13.25 21.01 13.25H160v24.45l-30.29 48.4c-5.32 10.64 2.42 23.16 14.31 23.16h95.96c11.89 0 19.63-12.52 14.31-23.16L224 440.45V416h136.86c9.01 0 17.26-5.2 21.01-13.25 3.8-8.17 2.44-17.47-3.56-24.26z'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+}
+
+.i-run {
+    display: inherit;
+    width: 1em;
+    vertical-align: middle;
+    height: 1em;
+    background-color: #417bff00;
+    background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='running' class='svg-inline--fa fa-running fa-w-13' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 416 512'%3E%3Cpath fill='currentColor' d='M272 96c26.51 0 48-21.49 48-48S298.51 0 272 0s-48 21.49-48 48 21.49 48 48 48zM113.69 317.47l-14.8 34.52H32c-17.67 0-32 14.33-32 32s14.33 32 32 32h77.45c19.25 0 36.58-11.44 44.11-29.09l8.79-20.52-10.67-6.3c-17.32-10.23-30.06-25.37-37.99-42.61zM384 223.99h-44.03l-26.06-53.25c-12.5-25.55-35.45-44.23-61.78-50.94l-71.08-21.14c-28.3-6.8-57.77-.55-80.84 17.14l-39.67 30.41c-14.03 10.75-16.69 30.83-5.92 44.86s30.84 16.66 44.86 5.92l39.69-30.41c7.67-5.89 17.44-8 25.27-6.14l14.7 4.37-37.46 87.39c-12.62 29.48-1.31 64.01 26.3 80.31l84.98 50.17-27.47 87.73c-5.28 16.86 4.11 34.81 20.97 40.09 3.19 1 6.41 1.48 9.58 1.48 13.61 0 26.23-8.77 30.52-22.45l31.64-101.06c5.91-20.77-2.89-43.08-21.64-54.39l-61.24-36.14 31.31-78.28 20.27 41.43c8 16.34 24.92 26.89 43.11 26.89H384c17.67 0 32-14.33 32-32s-14.33-31.99-32-31.99z'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+}
+
+/* Tooltip
+-------------------------------------------------- */
+.m-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+    .m-tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 0;
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -60px;
+    }
+
+    .m-tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+
+
+
+/*--------Bootswatch Addons-----------------*/
+
+.nav-tabs .nav-link:hover:not(.active), .nav-pills .nav-link:hover:not(.active) {
+    color: #ebebeb;
+    background-color: #4992df33;
+}

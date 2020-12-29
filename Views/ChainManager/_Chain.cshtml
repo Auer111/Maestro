@@ -1,0 +1,30 @@
+﻿
+@model ChainRender
+    
+
+<div class="card text-white bg-dark mb-3 w-100 mx-auto" style="background-color: rgb(65, 123, 255);">
+    <div class="card-header">Chain Start</div>
+    <div class="card-body" style="width: 100%;">
+        <h5 class="card-title text-center">Import Profile</h5>
+        <hr>
+        <div class="card-text row p-2">
+            <div class="col-5 badge-container"><h5>IN</h5>Selected Profile</div>
+            <div class="col-2"></div>
+            <div class="col-5 badge-container text-right" style="padding: 0;"><h5>OUT</h5>Profile Variables</div>
+        </div>
+    </div>
+</div>
+
+@foreach (Request request in Model.Requests)
+{
+    @Html.PartialAsync("_Link", request).Result
+}
+
+
+<button id="AddRequestCard" onclick="$('#ChainList').hide(); $('#RequestList').show();" class=" card-add card mb-3 p-4 w-100 mx-auto">
+    <div class="card-body mx-auto">
+        <h2 style="font-weight:100; color: gray;">Add Request</h2>
+    </div>
+</button>
+
+    

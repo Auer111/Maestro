@@ -1,0 +1,157 @@
+﻿@model Request
+
+<form id="EditRequest" asp-controller="RequestManager" asp-action="Edit" method="POST">
+
+    <input id="reqid" name="id" value="@Model.Id" readonly hidden />
+
+    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="pills-request-tab" data-toggle="pill" href="#pills-request" role="tab" aria-controls="pills-request" aria-selected="true">Request</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="pills-response-tab" data-toggle="pill" href="#pills-response" role="tab" aria-controls="pills-response" aria-selected="false">Response</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="pills-blueprint-tab" data-toggle="pill" href="#pills-blueprint" role="tab" aria-controls="pills-blueprint" aria-selected="false">Blueprint</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-request" role="tabpanel" aria-labelledby="pills-request-tab">
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Name</div>
+                </div>
+                <input id="reqName" name="Name" type="text" class="form-control" value="@Model.Name">
+
+                <div class="input-group-prepend ml-5">
+                    <div class="input-group-text" style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">Method</div>
+                </div>
+                <span class="float-right">
+                    @Html.DropDownListFor(model => model.Method, Enum.GetNames(typeof(Method)).Select(e => new SelectListItem { Text = e }), new { @class = "form-control" })
+                </span>
+            </div>
+
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Url</div>
+                </div>
+                <input id="reqURL" type="text" name="Url" class="form-control" value="@Model.Url">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-toppend">
+                    <span class="my-auto mr-3">Headers</span>
+                    <input type="submit" formaction="@Url.Action("HeaderAdd")" value="Add" class="btn btn-primary m-0 py-0 px-2 float-right" />
+                </div>
+                <div id="reqHeaders" class="list-group w-100">
+                    @{ int i = 0;
+
+                        foreach (Header header in Model.Headers)
+                        {
+                            <div class="w-100 list-group-item d-flex justify-content-between align-items-center" style="background: whitesmoke;">
+                                <input asp-for="Headers[i].Name" type="text" class="form-control br-0 headerInput" />
+                                <input asp-for="Headers[i].Value" type="text" class="form-control br-0 headerInput" />
+                                <button type="submit" name="index" formaction="@Url.Action("HeaderRemove")" value="@i" class="btn btn-outline-danger ml-3">Remove</button>
+                            </div>
+                            i++;
+                        }
+                    }
+                </div>
+            </div>
+
+            <div id="Request" class="form-group mb-2" style="position:relative;">
+                <div class="input-group-toppend">
+                    <span class="my-auto">Request Body</span>
+
+                    <div class="custom-control custom-switch my-auto mx-3">
+                        <input type="checkbox" class="custom-control-input @Model.RequestEditor.Id" id="reqSwitch">
+                        <label class="custom-control-label" for="reqSwitch">Blueprint</label>
+                    </div>
+                    <span class="float-right">
+                        @Html.DropDownListFor(model => model.Format,Enum.GetNames(typeof(Format)).Select(e => new SelectListItem { Text = e }),new { @class = "form-control var-type ml-3", @style = "height: 25px; padding: 0;" })
+                    </span>
+                </div>
+
+                <textarea id="reqRaw" name="Body" class="form-control editTypeTarget" style="border:none;" placeholder="<soapenv:Envelope>..." oninput="SetHeight(this)">@Model.Body</textarea>
+                @Html.PartialAsync("_XMLEditor", Model.RequestEditor).Result
+
+            </div>
+
+        </div>
+        <div class="tab-pane fade" id="pills-response" role="tabpanel" aria-labelledby="pills-response-tab">
+
+            <div id="Response" class="form-group mb-2">
+                <div class="input-group-toppend">
+                    <span class="my-auto">Response Body</span>
+
+                    <div class="custom-control custom-switch my-auto mx-3">
+                        <input type="checkbox" class="custom-control-input @Model.RequestEditor.Id" id="resSwitch">
+                        <label class="custom-control-label" for="resSwitch">Blueprint</label>
+                    </div>
+
+                    <input type="submit" formaction="@Url.Action("Send")" value="Fetch Response" class="btn btn-primary m-0 py-0 px-2 float-right" />
+                </div>
+
+                <textarea id="resRaw" class="form-control editTypeTarget switch-target" placeholder="<soapenv:Envelope>..." value="@Model.Body" readonly oninput="SetHeight(this)"></textarea>
+                @Html.PartialAsync("_XMLEditor", Model.ResponseEditor).Result
+
+
+            </div>
+
+        </div>
+        <div class="tab-pane fade blueprint row" id="pills-blueprint" role="tabpanel" aria-labelledby="pills-blueprint-tab">
+
+            <div id="bp-vars-headers" class="row">
+                <div class="col"><h2 class="p-2">IN</h2></div>
+                <div class="col"><h2 class="p-2">OUT</h2></div>
+            </div>
+            <div id="bp-vars" class="row">
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </div>
+    <input type="submit" formaction="@Url.Action("Save")" value="Save" class="btn btn-primary mt-2" />
+</form>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function ()
+    {
+        SetHeight(document.querySelector("#reqRaw"));
+        //Request Editor
+        SetupToggle("@Model.RequestEditor.Id","#reqRaw");
+        //Response Editor
+        SetupToggle("@Model.ResponseEditor.Id","#resRaw");
+    });
+    function SetHeight(textarea) {
+        textarea.style.height = "";
+        textarea.style.height = textarea.scrollHeight + 3 + "px";
+    }
+    function SetupToggle(targ,raw)
+    {
+        UpdateEditor(targ, raw);
+        $("." + targ).change(function (event) {UpdateEditor(targ, raw)});
+    }
+    function UpdateEditor(targ, raw) {
+        if (!event.target.checked) {
+            $("#" + targ).hide();
+            $(raw).show();
+            SetHeight($(raw)[0]);
+        }
+        else {
+            $("#" + targ).show();
+            $(raw).hide();
+            
+        }
+    }
+
+
+
+
+
+
+
+</script>

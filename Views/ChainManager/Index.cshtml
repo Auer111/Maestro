@@ -1,0 +1,62 @@
+﻿@model ChainManager
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="row m-3">
+
+        <div id="ChainList" class="col-2">
+
+            <form id="NewChain" asp-controller="ChainManager" asp-action="CreateChain" method="GET" class="mb-3">
+                <button class="btn btn-outline-primary w-100">New Chain</button>
+            </form>
+
+            @if (Model.Select.Count() <= 0)
+            {
+                <div class="alert alert-info">No requests to display</div>
+            }
+            else
+            {
+                foreach (ChainSelection chain in Model.Select)
+                {
+                    <form asp-controller="ChainManager" asp-action="GetChainRender" method="POST" on-success="GetChain_success">
+                        <input name="idKey" value="@chain.Id" readonly hidden />
+                        <button class="w-100 btn btn-light">@chain.Name</button>
+                    </form>
+                }
+            }
+
+        </div>
+        <div id="RequestList" class="col-2" style="display:none;">
+
+
+            <button onclick="$('#ChainList').show(); $('#RequestList').hide();" class="btn btn-outline-primary w-100 mb-3">Back</button>
+
+
+            @if (Model.Select.Count() <= 0)
+            {
+                <div class="alert alert-info">No requests to display</div>
+            }
+            else
+            {
+                foreach (RequestSelection req in ViewBag.RequestSelectionList)
+                {
+                    <form asp-controller="RequestManager" asp-action="GetRequest" method="POST">
+                        <input name="idKey" value="@req.Id" readonly hidden />
+                        <button class="w-100 btn btn-light">@req.Name</button>
+                    </form>
+                }
+            }
+        </div>
+        <div id="ChainEdit" class="col-6">
+
+           @if (Model.Chain != null)
+            {
+                @Html.PartialAsync("_Chain", Model.Chain).Result
+            }
+
+        </div>
+
+    </div>
+

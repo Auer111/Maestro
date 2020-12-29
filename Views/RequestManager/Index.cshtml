@@ -1,0 +1,80 @@
+﻿@model RequestManager
+
+@{
+    ViewData["Title"] = "Request Manager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="row m-3">
+
+        <div class="col-2">
+
+            <div class="card p-2">
+
+                <form id="NewRequest" asp-controller="RequestManager" asp-action="Create" method="GET">
+                    <button class="btn btn-outline-primary mb-2 w-100">New Request</button>
+                </form>
+
+                @if (Model.Select.Count() <= 0)
+                {
+                    <div class="alert alert-info">No requests to display</div>
+                }
+                else
+                {
+                <form asp-controller="RequestManager" asp-action="Load" method="POST">
+                    @foreach (RequestSelection req in Model.Select)
+                    {
+                        <button type="submit" name="idKey" class="w-100 btn btn-primary" value="@req.Id">@req.Name</button>
+                    }
+                </form>
+                }
+
+            </div>
+        </div>
+
+        <div class="col-10">
+
+            @if (Model.Request != null)
+            {
+                @Html.PartialAsync("_Request", Model.Request).Result
+            }
+
+        </div>
+
+    </div>
+
+@section scripts
+{
+<script>
+
+    //Generate Body for editing
+    function CreateBodyRAW(content, target$)
+    {
+        if (content == null) { target$.val(""); SetHeight(target$[0]); return; }
+        target$.val(content);
+        SetHeight(target$[0]);
+    }
+
+    function GetRequest_success(result)
+    {
+        RenderRequest(JSON.parse(result));
+    }
+
+
+    function EditRequest_start() 
+    {
+        console.log("GetData_start");
+    }
+    function EditRequest_success(result)
+    {
+        console.log("GetData_success", result);
+
+        let reqData = maestro.Request;
+        reqData.rBody = result;
+
+        CreateBodyRAW(reqData.rBody, $("#resRaw"));
+        CreateMaestroBody(reqData.rBody, $("#resMaestro"));
+    }
+
+</script>
+}

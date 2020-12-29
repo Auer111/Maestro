@@ -1,0 +1,134 @@
+﻿@model XMLEditor
+@*<div id="reqMaestroOverlay" class="AddVariableOverlay" direction="0">
+        <button class="close-overlay" type="button" onclick="$('#reqMaestroOverlay').hide(); maestro.Overlay(false);">X</button>
+        <span class="my-auto mx-3">From</span>
+        <select class="form-control var-type" asp-items="Html.GetEnumSelectList<Maestro.Models.Type>()"></select>
+        <span class="my-auto mx-3">insert</span>
+        <input type="text" class="form-control br-0 var-mapping" placeholder="Variable">
+        <span class="my-auto mx-3">into</span>
+        <input type="text" class="form-control br-0 var-tagname" readonly>
+        <div class="input-group-append var-add">
+            <button class="btn btn-dark" type="button" style="border-left:none; border-radius: 0 5px 5px 0;">Edit</button>
+        </div>
+    </div>*@
+
+<div id="@Model.Id" class="XMLEditor form-control editTypeTarget">
+    @{
+        if (Model.Elements != null)
+        {
+            int i = 0; string stack = "";
+
+            foreach (xmlElement el in Model.Elements)
+            {
+                i++;
+                if (el.hasChildren)
+                {
+                    stack += $"<div id=\"Row{i}\" class=\"xmlRow\" style=\"padding-left:{el.Depth * 10}px;\">";
+                }
+                else
+                {
+
+                    stack += $"<div class=\"xmlRow\" style=\"padding-left:{el.Depth * 10}px;\">";
+                    stack += $"&lt;";
+                    stack += $"<button type=\"button\" class=\"xmlStaticContent\">";
+                    stack += $"<div class=\"xmlEditButton mb-1\">{@el.Name}</div>";
+                    stack += $"</button>";
+                    stack += $">";
+                    stack += $"<div style=\"display: inline; cursor: help;\" class=\"xmlContent default\">{@el.Value}</div>";
+                    stack += $"&lt;/{el.Name}>";
+                    stack += $"</div>";
+                }
+            }
+
+            foreach (xmlElement el in Model.Elements)
+            {
+                if (el.hasChildren)
+                {
+                    stack += "</div>";
+                }
+            }
+
+            @Html.Raw(stack);
+
+        }
+    }
+
+
+    <style type='text/css'>
+    @{
+        if (Model.Elements != null)
+        {
+            int i = 0;
+            foreach (xmlElement el in Model.Elements)
+            {
+                i++;
+                if (el.hasChildren)
+                {
+                    @Html.Raw(
+                    "#Row" + i + @"::before{ content: '<"+ el.Name +">'} " +
+                    "#Row" + i + @"::after{ content: '</"+ el.Name +">'; position: relative;}")
+                }
+            }
+        }
+    }
+    </style>
+</div>
+
+
+
+
+
+
+@*//switch (DocNode.children.length > 0)
+    //        {
+    //            case true: //Is a container
+    //                content = '
+    <br />';
+    //                style = `padding-left: ${depth* 10}px;`
+
+    //                this.addStyle(`#${newID}::before{ content: '<${DocNode.tagName}>
+        ';}
+        //                               #${newID}::after{ content: '
+    </${DocNode.tagName}>'; position: relative; left: ${depth * 10}px;}`)
+
+    //                el$ = $(`<${DocNode.tagName} //id ="${newID}" class="xmlRow" style="${style}">
+        ${content}</ ${DocNode.tagName}>`);
+
+        //                break;
+
+        //            case false: //Has data
+
+        //                let variableData = maestro.getPropertyVariable(DocNode.tagName);
+
+        //let isDefault = "default";
+        //let iconClass = "i-edit";
+        //let buttonColor = "";
+        //let tooltipText = "Default";
+        //                if (variableData != null)
+        //                {
+
+        //                    if (variableData.Direction == 0) { isDefault = ""; }
+        //                    buttonColor = maestro.VarType[variableData.Type].color;
+        //                    iconClass = maestro.VarType[variableData.Type].icon;
+        //                    tooltipText = variableData.Mapping;
+        //                }
+
+
+        //                content = `<button id="${DocNode.tagName}" type="button" onclick="xml.ShowOverlay(this,'${DocNode.tagName}');" class="xmlStaticContent" style="background-color:${buttonColor};"><div class="xmlEditButton ${iconClass} mb-1"></div>${DocNode.tagName}</button>`;
+        //                style = `padding-left: ${depth* 10}px;`
+
+        //                this.addStyle(`#${newID}::before{ content: '<';}
+        //                               #${newID}::after{ content: '
+    </${DocNode.tagName}>';}`)
+    //                el$ = $(`<${DocNode.tagName} //id ="${newID}" class="xmlRow" style="${style}">
+        ${content}><div style="display: inline; cursor: help;" tooltip="${tooltipText}" class="xmlContent ${isDefault}">${DocNode.textContent}</div></ ${DocNode.tagName}>`);
+
+        //                break;
+        //        }
+
+        //        rootEl$.append(el$);
+        //rootEl$.append('<br />');
+
+        //        return el$;
+
+*@
